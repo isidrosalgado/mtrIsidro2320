@@ -22,14 +22,14 @@ view: orders {
     sql: ${TABLE}.user_id ;;
   }
 
-  dimension: test {
+  dimension: test_rule_recommendation_final {
     sql:
     {% if ${user_id} == -100 %} "accept"
     {% elsif ${user_id} == 10000 %} "review"
     {% elsif ${user_id} == 20000 %} "reject"
     {% else %} null
     {% endif %} ;;
-    type: string
+
   }
   measure: count {
     type: count
