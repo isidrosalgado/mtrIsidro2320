@@ -16,21 +16,35 @@ view: orders {
     type: string
     sql: ${TABLE}.status ;;
   }
+
   dimension: user_id {
     type: number
     # hidden: yes
     sql: ${TABLE}.user_id ;;
   }
 
+  dimension: test_rule_recommendation {
+
+    sql:
+    CASE
+      WHEN ${user_id} = 21404 THEN 'accept'
+      WHEN ${user_id} = 1073 THEN 'review'
+      WHEN ${user_id} = 15397 THEN 'reject'
+      ELSE "nothing"
+    END ;;
+    type: string
+  }
   dimension: test_rule_recommendation_final {
     sql:
-    {% if ${user_id} == -100 %} "accept"
-    {% elsif ${user_id} == 10000 %} "review"
-    {% elsif ${user_id} == 20000 %} "reject"
-    {% else %} null
-    {% endif %} ;;
-
+      {% if ${user_id} == 21404 %} "accept"
+      {% elsif ${user_id} == 1073 %} "review"
+      {% elsif ${user_id} == 15397 %} "reject"
+      {% else %} null
+      {% endif %} ;;
+    type: string
   }
+
+
   measure: count {
     type: count
     drill_fields: [detail*]
