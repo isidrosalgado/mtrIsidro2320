@@ -27,23 +27,25 @@ view: orders {
 
     sql:
     CASE
-      WHEN ${user_id} = 21404 THEN 'accept'
-      WHEN ${user_id} = 1073 THEN 'review'
-      WHEN ${user_id} = 15397 THEN 'reject'
+      WHEN ${user_id} = 10 THEN 'accept'
+      WHEN ${user_id} = 11 THEN 'review'
+      WHEN ${user_id} = 12 THEN 'reject'
       ELSE "nothing"
     END ;;
     type: string
   }
   dimension: test_rule_recommendation_final {
-    sql:
-      {% if ${user_id} == 21404 %} "accept"
-      {% elsif ${user_id} == 1073 %} "review"
-      {% elsif ${user_id} == 15397 %} "reject"
-      {% else %} null
-      {% endif %} ;;
     type: string
-  }
+    sql:
+    ${user_id} ;;
 
+      html: {% if value == 10 %} accept
+            {% elsif value == 11 %} review
+            {% elsif value == 12 %} reject
+            {% else %} other
+            {% endif %} ;;
+
+      }
 
   measure: count {
     type: count
